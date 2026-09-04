@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AfriCare – Digital Health Platform for Africa</title>
+  <meta name="description" content="AfriCare connects patients, providers, and community health workers through accessible mobile technology." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --primary-light: #ccfbf1;
+      --accent: #f97316;
+      --bg: #f8fafc;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --white: #ffffff;
+      --shadow: 0 10px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.02);
+      --radius: 1rem;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Inter', sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    h1,h2,h3,h4 { font-family:'Poppins', sans-serif; line-height:1.25; font-weight:700; }
+    a { text-decoration:none; color:inherit; }
+    img { max-width:100%; display:block; }
+    .container { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+
+    /* Navbar */
+    .navbar {
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      background:rgba(255,255,255,0.9); backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(0,0,0,0.05);
+    }
+    .navbar .container { display:flex; align-items:center; justify-content:space-between; height:70px; }
+    .logo { font-family:'Poppins', sans-serif; font-weight:800; font-size:1.5rem; color:var(--primary-dark); }
+    .logo span { color:var(--accent); }
+    .nav-links { display:flex; align-items:center; gap:2rem; list-style:none; }
+    .nav-links a { font-weight:500; color:var(--text-light); transition:color 0.2s; font-size:0.95rem; }
+    .nav-links a:hover { color:var(--primary); }
+    .nav-cta { background:var(--primary); color:var(--white) !important; padding:0.6rem 1.4rem; border-radius:999px; font-weight:600; }
+    .nav-cta:hover { background:var(--primary-dark) !important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:5px; }
+    .hamburger span { display:block; width:25px; height:3px; background:var(--text); border-radius:3px; }
+
+    /* Hero with background image */
+    .hero {
+      padding:140px 0 100px;
+      background:linear-gradient(135deg, rgba(15,118,110,0.85), rgba(17,94,89,0.9)), url('https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=1600&auto=format&fit=crop') center/cover no-repeat;
+      color:var(--white);
+      position:relative;
+    }
+    .hero .container { max-width:800px; }
+    .hero h1 { font-size:3.5rem; margin-bottom:1.5rem; letter-spacing:-0.03em; }
+    .hero p { font-size:1.25rem; opacity:0.9; max-width:600px; margin-bottom:2.5rem; }
+    .hero-buttons { display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn { display:inline-block; padding:0.8rem 1.8rem; border-radius:999px; font-weight:600; transition:all 0.2s; cursor:pointer; }
+    .btn-primary { background:var(--white); color:var(--primary-dark); }
+    .btn-primary:hover { background:#f0fdfa; transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+    .btn-outline { border:2px solid rgba(255,255,255,0.6); color:var(--white); }
+    .btn-outline:hover { background:rgba(255,255,255,0.1); border-color:var(--white); }
+
+    section { padding:5rem 0; }
+    .section-header { text-align:center; max-width:700px; margin:0 auto 3rem; }
+    .section-header h2 { font-size:2.5rem; margin-bottom:1rem; color:var(--primary-dark); }
+    .section-header p { color:var(--text-light); font-size:1.1rem; }
+
+    /* Problem with images */
+    .problem { background:var(--white); }
+    .problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+    .problem-card { background:#f8fafc; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+    .problem-card img { width:100%; height:200px; object-fit:cover; }
+    .problem-card .card-body { padding:1.8rem; }
+    .problem-card h3 { color:var(--primary-dark); margin-bottom:0.8rem; }
+    .problem-card p { color:var(--text-light); font-size:0.95rem; }
+
+    /* Solution */
+    .solution-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+    .solution-card { background:var(--white); border-radius:var(--radius); padding:2rem; box-shadow:var(--shadow); transition:transform 0.3s, box-shadow 0.3s; }
+    .solution-card:hover { transform:translateY(-8px); box-shadow:0 20px 30px -10px rgba(0,0,0,0.15); }
+    .solution-icon { width:60px; height:60px; background:var(--primary-light); border-radius:16px; display:flex; align-items:center; justify-content:center; margin-bottom:1.5rem; }
+    .solution-icon svg { width:32px; height:32px; stroke:var(--primary); }
+    .solution-card h3 { margin-bottom:0.8rem; color:var(--primary-dark); }
+    .solution-card p { color:var(--text-light); font-size:0.95rem; }
+
+    /* Revenue */
+    .revenue-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:1.5rem; }
+    .revenue-card { background:var(--white); border-radius:var(--radius); padding:1.8rem; box-shadow:var(--shadow); border-top:4px solid var(--primary); }
+    .revenue-card h3 { color:var(--primary-dark); margin-bottom:0.5rem; font-size:1.1rem; }
+    .revenue-card p { color:var(--text-light); font-size:0.9rem; }
+
+    /* Competition */
+    .competition-table { width:100%; border-collapse:collapse; background:var(--white); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+    .competition-table th, .competition-table td { padding:1.2rem 1.5rem; text-align:left; border-bottom:1px solid #e2e8f0; }
+    .competition-table th { background:var(--primary-dark); color:var(--white); }
+    .competition-table td:first-child { font-weight:600; }
+    .competition-table .highlight { background:var(--primary-light); font-weight:600; }
+
+    /* Impact */
+    .impact-timeline { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+    .impact-item { background:var(--white); border-radius:var(--radius); padding:2rem; box-shadow:var(--shadow); text-align:center; }
+    .impact-year { font-family:'Poppins', sans-serif; font-weight:800; font-size:1.5rem; color:var(--accent); margin-bottom:1rem; }
+    .impact-item h3 { color:var(--primary-dark); margin-bottom:0.8rem; }
+    .impact-item p { color:var(--text-light); font-size:0.95rem; }
+
+    /* Ask */
+    .ask { background:var(--primary-dark); color:var(--white); text-align:center; }
+    .ask h2 { color:var(--white); }
+    .ask-box { background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.3); border-radius:2rem; padding:3rem 2rem; max-width:700px; margin:3rem auto 0; }
+    .ask-box p { font-size:1.3rem; margin-bottom:2rem; }
+    .btn-accent { background:var(--accent); color:var(--white); font-size:1.1rem; padding:1rem 2.5rem; }
+    .btn-accent:hover { background:#ea580c; transform:translateY(-2px); }
+
+    footer { background:#0f172a; color:var(--white); padding:3rem 0; text-align:center; }
+    footer p { opacity:0.8; font-size:0.95rem; }
+
+    .fade-up { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width:768px) {
+      .nav-links { position:fixed; top:70px; left:0; right:0; background:var(--white); flex-direction:column; padding:2rem; gap:1.5rem; box-shadow:0 20px 30px rgba(0,0,0,0.1); transform:translateY(-150%); transition:transform 0.3s; }
+      .nav-links.open { transform:translateY(0); }
+      .hamburger { display:flex; }
+      .hero h1 { font-size:2.5rem; }
+      .problem-grid, .solution-grid, .impact-timeline { grid-template-columns:1fr; }
+      .competition-table { display:block; overflow-x:auto; }
+      section { padding:3.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="logo">Afri<span>Care</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#problem" onclick="closeMenu()">Problem</a></li>
+        <li><a href="#solution" onclick="closeMenu()">Solution</a></li>
+        <li><a href="#revenue" onclick="closeMenu()">Revenue</a></li>
+        <li><a href="#competition" onclick="closeMenu()">Competition</a></li>
+        <li><a href="#impact" onclick="closeMenu()">Impact</a></li>
+        <li><a href="#ask" class="nav-cta" onclick="closeMenu()">Support</a></li>
+      </ul>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Transforming Patient Engagement Across Africa</h1>
+      <p>AfriCare is a digital health platform that connects patients, healthcare providers, and community health workers through accessible mobile technology.</p>
+      <div class="hero-buttons">
+        <a href="#problem" class="btn btn-primary">Learn More</a>
+        <a href="#ask" class="btn btn-outline">Our Mission</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section id="problem" class="problem">
+    <div class="container">
+      <div class="section-header fade-up">
+        <h2>The Healthcare Access Gap</h2>
+        <p>Africa’s healthcare systems are overburdened, leading to preventable deaths and inefficient resource use.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card fade-up">
+          <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&auto=format&fit=crop" alt="Hospital corridor" />
+          <div class="card-body">
+            <h3>Overcrowded Facilities</h3>
+            <p>Long wait times and limited capacity force patients to delay or forgo care. AfriCare reduces strain through digital triage and appointment scheduling.</p>
+          </div>
+        </div>
+        <div class="problem-card fade-up">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop" alt="Doctor with patient" />
+          <div class="card-body">
+            <h3>Poor Patient Engagement</h3>
+            <p>Lack of follow‑up and health literacy leads to missed appointments and untreated chronic conditions. AfriCare’s reminders and local‑language support keep patients on track.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution -->
+  <section id="solution">
+    <div class="container">
+      <div class="section-header fade-up">
+        <h2>Our Solution</h2>
+        <p>Technology that works for everyone – from feature phones to smartphones.</p>
+      </div>
+      <div class="solution-grid">
+        <div class="solution-card fade-up">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+          </div>
+          <h3>Omnichannel Reach</h3>
+          <p>USSD, WhatsApp, and voice support in Yoruba, Hausa, Igbo, and Pidgin. No internet required.</p>
+        </div>
+        <div class="solution-card fade-up">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h3>Smart Reminders</h3>
+          <p>Reduce no‑show rates by 40% and improve chronic disease management with automated reminders.</p>
+        </div>
+        <div class="solution-card fade-up">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+          </div>
+          <h3>CareCredit Micro‑loans</h3>
+          <p>Affordable health financing through mobile money, paid in three instalments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Revenue -->
+  <section id="revenue" class="problem" style="background:var(--white);">
+    <div class="container">
+      <div class="section-header fade-up">
+        <h2>Revenue Model</h2>
+        <p>Seven diversified streams ensure long‑term sustainability.</p>
+      </div>
+      <div class="revenue-grid">
+        <div class="revenue-card fade-up"><h3>Hospital Subscriptions</h3><p>Tiered monthly plans for clinics and large hospitals.</p></div>
+        <div class="revenue-card fade-up"><h3>Transaction Commissions</h3><p>15% on telemedicine and diagnostics bookings.</p></div>
+        <div class="revenue-card fade-up"><h3>Micro‑loan Interest</h3><p>8% on CareCredit health loans.</p></div>
+        <div class="revenue-card fade-up"><h3>Government Contracts</h3><p>Bids through the Basic Health Care Provision Fund.</p></div>
+        <div class="revenue-card fade-up"><h3>Grants & Philanthropy</h3><p>Partnerships with global health foundations.</p></div>
+        <div class="revenue-card fade-up"><h3>Data Insights</h3><p>Anonymised population health analytics for policy makers.</p></div>
+        <div class="revenue-card fade-up"><h3>Freemium Upgrades</h3><p>Premium tools for community health workers.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Competition -->
+  <section id="competition">
+    <div class="container">
+      <div class="section-header fade-up">
+        <h2>Competitive Advantage</h2>
+        <p>AfriCare serves the bottom of the pyramid with a unique combination of features.</p>
+      </div>
+      <table class="competition-table fade-up">
+        <thead>
+          <tr><th>Feature</th><th>MyItura</th><th>Helium Health</th><th>CareMessage</th><th>AfriCare</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Telemedicine</td><td>✅ Urban</td><td>❌</td><td>✅ US only</td><td>✅ Rural + Urban</td></tr>
+          <tr><td>USSD / Feature Phones</td><td>❌</td><td>❌</td><td>❌</td><td class="highlight">✅</td></tr>
+          <tr><td>Local Languages</td><td>❌</td><td>❌</td><td>❌</td><td class="highlight">✅</td></tr>
+          <tr><td>Health Micro‑loans</td><td>❌</td><td>❌</td><td>❌</td><td class="highlight">✅</td></tr>
+          <tr><td>CHW Tools</td><td>❌</td><td>❌</td><td>❌</td><td class="highlight">✅</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Impact & Scale -->
+  <section id="impact" class="problem" style="background:var(--white);">
+    <div class="container">
+      <div class="section-header fade-up">
+        <h2>Impact & Scale</h2>
+        <p>From Lagos to the rest of Africa.</p>
+      </div>
+      <div class="impact-timeline">
+        <div class="impact-item fade-up"><div class="impact-year">Year 1</div><h3>Lagos</h3><p>10 clinics, 50 CHWs, 10,000 patients.</p></div>
+        <div class="impact-item fade-up"><div class="impact-year">Year 2</div><h3>5 States</h3><p>Lagos, Rivers, Kano, Abuja, Enugu.</p></div>
+        <div class="impact-item fade-up"><div class="impact-year">Year 5</div><h3>Pan‑African</h3><p>Ghana, Kenya, Tanzania.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ask -->
+  <section id="ask" class="ask">
+    <div class="container">
+      <div class="section-header fade-up">
+        <h2>Investment Opportunity</h2>
+      </div>
+      <div class="ask-box fade-up">
+        <p>Seeking ₦50 million to deploy the MVP and reach 10,000 patients in Lagos.</p>
+        <a href="#" class="btn btn-accent">Partner With Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>AfriCare – Digital Health Platform for Africa</p>
+      <p style="margin-top:0.5rem;">Built for the Fembo Innovation Challenge</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+    function closeMenu() { document.getElementById('navLinks').classList.remove('open'); }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
